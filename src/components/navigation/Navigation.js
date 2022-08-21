@@ -1,11 +1,14 @@
+// components
 import {
   Navbar,
   Logo,
   HamburgerMenu,
   Menu,
   MenuItem,
+  StyledLink,
 } from "./Navigation.styled";
 import { Button } from "../button/Button.styled";
+
 // menu icons
 import hamburger from "../../assets/hamburger/icon-hamburger.svg";
 import closeMenu from "../../assets/hamburger/icon-close.svg";
@@ -18,7 +21,7 @@ function Navigation() {
   return (
     <Navbar>
       <Logo>
-        <a href="#">EventApp</a>
+        <StyledLink to="/">EventApp</StyledLink>
       </Logo>
 
       <HamburgerMenu onClick={() => setMenuIsOpen((prev) => !prev)}>
@@ -26,10 +29,18 @@ function Navigation() {
       </HamburgerMenu>
 
       <Menu menuPosition={menuIsOpen ? "0" : "-100%"}>
-        <MenuItem>Home</MenuItem>
-        <MenuItem>Events</MenuItem>
-        <MenuItem>Sign In</MenuItem>
-        <MenuItem>Sign Up</MenuItem>
+        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+          <StyledLink to="/">Home</StyledLink>
+        </MenuItem>
+        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+          <StyledLink to="/events">Events</StyledLink>
+        </MenuItem>
+        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+          <StyledLink to="/signin">Sign In</StyledLink>
+        </MenuItem>
+        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+          <StyledLink to="/signup">Sign Up</StyledLink>
+        </MenuItem>
 
         <MenuItem>
           <Button>Logout</Button>

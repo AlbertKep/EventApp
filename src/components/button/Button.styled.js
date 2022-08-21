@@ -8,6 +8,11 @@ export const Button = styled.button`
   border: 3px #fff solid;
   color: #fff;
 
+  &:hover {
+    background-color: #fff;
+    color: #2127c8;
+  }
+
   @media screen and (min-width: 576px) {
     font-size: 1.2rem;
     padding: 0.3em 0.5em;

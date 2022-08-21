@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Navbar = styled.nav`
   background-color: #2127c8;
@@ -59,11 +60,12 @@ export const MenuItem = styled.li`
   font-weight: 600;
   overflow-y: hidden;
 
-  /* &:hover {
-    transform: scale(1.1);
-  } */
-
   @media screen and (min-width: 768px) {
     padding-right: 1.5em;
   }
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
 `;

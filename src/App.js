@@ -3,13 +3,27 @@ import { Global } from "./globals/Global";
 
 // components
 import Navigation from "./components/navigation/Navigation";
+import Home from "./pages/home/Home";
+import Events from "./pages/events/Events";
+import SignIn from "./pages/signIn/SignIn";
+import SignUp from "./pages/signUp/SignUp";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <Global />
-      <Navigation />
-      <h1>Hello World</h1>
+      <BrowserRouter>
+        <Navigation />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
