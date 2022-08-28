@@ -36,8 +36,9 @@ export const Menu = styled.ul`
   left: ${({ menuPosition }) => menuPosition};
   height: 100vh;
   width: 100%;
+  z-index: 999;
   background: #2127c8;
-  font-size: 2rem;
+  font-size: 1.5rem;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;

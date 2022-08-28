@@ -25,4 +25,9 @@ button {
   border: none;
   background-color: transparent;
 }
+
+/* section {
+  display: flex;
+  justify-content: center;
+} */
 `;
