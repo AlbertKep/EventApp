@@ -36,7 +36,7 @@ export const Menu = styled.ul`
   left: ${({ menuPosition }) => menuPosition};
   height: 100vh;
   width: 100%;
-  z-index: 999;
+  z-index: 99;
   background: #2127c8;
   font-size: 1.5rem;
   overflow-x: hidden;
@@ -60,6 +60,7 @@ export const MenuItem = styled.li`
   cursor: pointer;
   font-weight: 600;
   overflow-y: hidden;
+  padding: 0.2em 0.4em;
 
   @media screen and (min-width: 768px) {
     padding-right: 1.5em;
@@ -67,6 +68,9 @@ export const MenuItem = styled.li`
 `;
 
 export const StyledLink = styled(Link)`
+  display: inline-block;
   text-decoration: none;
   color: #fff;
+  border: 3px solid transparent;
+  padding: 0.3em 0;
 `;

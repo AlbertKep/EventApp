@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { Button } from "../button/Button.styled";
 
-export const ImageContainer = styled.div`
+export const FormContainer = styled.section`
   text-align: center;
+  padding-top: 3em;
+`;
+
+export const ImageContainer = styled.div`
   margin-top: 3.5em;
 `;
 export const Form = styled.form`
-  text-align: center;
   margin-top: 2.5em;
 `;
 
@@ -41,5 +44,22 @@ export const FormButton = styled(Button)`
   &:hover {
     background-color: #fff;
     color: #1c1c1c;
+  }
+`;
+
+export const TextContainer = styled.div`
+  margin-top: 2.5em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+
+  p {
+    margin-right: 0.5em;
+  }
+
+  span {
+    cursor: pointer;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid #fff;
   }
 `;

@@ -13,10 +13,25 @@ import { Button } from "../button/Button.styled";
 import hamburger from "../../assets/hamburger/icon-hamburger.svg";
 import closeMenu from "../../assets/hamburger/icon-close.svg";
 
-import { useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+// services
+import { logout } from "../../firebase/api.service";
 
 function Navigation() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    logout();
+    dispatch({ type: "LOGOUT" });
+    setMenuIsOpen(false);
+    navigate("/");
+  };
 
   return (
     <Navbar>
@@ -35,16 +50,23 @@ function Navigation() {
         <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
           <StyledLink to="/events">Events</StyledLink>
         </MenuItem>
-        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
-          <StyledLink to="/signin">Sign In</StyledLink>
-        </MenuItem>
-        <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
-          <StyledLink to="/signup">Sign Up</StyledLink>
-        </MenuItem>
 
-        <MenuItem>
-          <Button>Logout</Button>
-        </MenuItem>
+        {!user && (
+          <>
+            <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+              <StyledLink to="/signin">Sign In</StyledLink>
+            </MenuItem>
+            <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+              <StyledLink to="/signup">Sign Up</StyledLink>
+            </MenuItem>
+          </>
+        )}
+
+        {user && (
+          <MenuItem>
+            <Button onClick={() => handleClick()}>Logout</Button>
+          </MenuItem>
+        )}
       </Menu>
     </Navbar>
   );
