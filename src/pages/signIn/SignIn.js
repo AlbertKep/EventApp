@@ -8,6 +8,7 @@ import {
   FormButton,
   TextContainer,
 } from "../../components/form/Form.styled";
+import Loading from "../../components/loading/Loading";
 
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -42,6 +43,7 @@ function SignIn() {
       setPassword("");
       navigate("/");
     } catch (err) {
+      setIsLoading(false);
       setError(err.message);
     }
   };
@@ -83,7 +85,7 @@ function SignIn() {
           </TextContainer>
         </FormContainer>
       )}
-      {isLoading && <p>Loading</p>}
+      {isLoading && <Loading />}
     </>
   );
 }

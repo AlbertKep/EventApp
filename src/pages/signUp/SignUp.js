@@ -8,6 +8,7 @@ import {
   InputContainer,
   FormButton,
 } from "../../components/form/Form.styled";
+import Loading from "../../components/loading/Loading";
 
 import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -52,6 +53,7 @@ function SignUp() {
       setName("");
       navigate("/");
     } catch (err) {
+      setIsLoading(false);
       setError(err.message);
     }
   };
@@ -100,7 +102,7 @@ function SignUp() {
           {error && <p>{error}</p>}
         </FormContainer>
       )}
-      {isLoading && <p>Loading</p>}
+      {isLoading && <Loading />}
     </>
   );
 }
