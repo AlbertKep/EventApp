@@ -2,25 +2,31 @@ import styled from "styled-components";
 
 export const HomeHeader = styled.header`
   height: 90vh;
-  display: flex;
-
-  img {
-    width: 100%;
+  justify-content: space-between;
+  @media screen and (min-width: 576px) {
+    display: flex;
   }
 `;
 
 export const EventsContainer = styled.div`
-  width: 100%;
-  @media screen and (min-width: 576px) {
+  height: -webkit-fill-available;
+  /* width: 100%; */
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "one one"
+    "two two"
+    "three three"; */
+
+  @media screen and (min-width: 992px) {
     display: grid;
-    grid-template-columns: 1fr 0.7fr 1.3fr;
-    grid-template-rows: 1.4fr 0.6fr 0.8fr 1.2fr;
-    gap: 0px 0px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0.75em;
     grid-template-areas:
-      "one one three"
-      "one one four"
-      "two two four"
-      "two two five";
+      "one two"
+      "three four";
     width: 60%;
   }
 `;
@@ -28,11 +34,17 @@ export const EventsContainer = styled.div`
 export const Event = styled.div`
   position: relative;
   grid-area: ${({ grid }) => grid};
-  transition: all 0.5s;
+  cursor: pointer;
+  overflow: hidden;
+  height: 33%;
 
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
+  @media screen and (min-width: 992px) {
+    height: 100%;
+    &:hover {
+      img {
+        transform: scale(1.2);
+      }
+    }
   }
 `;
 export const ImageContainer = styled.div`
@@ -42,6 +54,11 @@ export const ImageContainer = styled.div`
   img {
     vertical-align: top;
     object-fit: cover;
+    width: 100%;
+    height: 100%;
+    /* max-width: 100%;
+    max-height: 100%; */
+    transition: all 0.5s ease-in-out;
   }
 `;
 
@@ -68,17 +85,21 @@ export const EventInfo = styled.div`
 `;
 export const HeadingContainer = styled.div`
   display: none;
+  flex-basis: 60%;
+
+  img {
+    width: 100%;
+  }
 
   @media screen and (min-width: 576px) {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 40%;
     padding: 0 1.5em;
   }
 
-  @media screen and (min-width: 922px) {
+  @media screen and (min-width: 992px) {
     padding: 0 3em;
   }
 `;
@@ -87,6 +108,8 @@ export const Heading = styled.h1`
   font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.5em;
+  width: 100%;
+  max-width: 400px;
 
   @media screen and (min-width: 1200px) {
     font-size: 4rem;

@@ -16,6 +16,7 @@ const authReducer = (state, action) => {
       return state;
   }
 };
+
 // component
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, {
@@ -25,8 +26,10 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       dispatch({ type: "AUTH_STATE", payload: user });
-      unsubscribe();
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
