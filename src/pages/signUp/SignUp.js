@@ -11,7 +11,8 @@ import {
 import Loading from "../../components/loading/Loading";
 
 import { auth } from "../../firebase/config";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signUp } from "../../firebase/api.service";
 
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,30 +32,20 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // signUp(name, email, password);
     setError(null);
     setIsLoading(true);
 
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      await updateProfile(response.user, {
-        displayName: name,
-      });
-
-      dispatch({ type: "SIGN_IN", payload: response.user });
+      await signUp(name, email, password);
+      dispatch({ type: "SIGN_IN", payload: auth.currentUser });
       setIsLoading(false);
       setEmail("");
       setPassword("");
       setName("");
       navigate("/");
-    } catch (err) {
+    } catch (error) {
       setIsLoading(false);
-      setError(err.message);
+      setError(error.message);
     }
   };
 

@@ -10,14 +10,6 @@ export const HomeHeader = styled.header`
 
 export const EventsContainer = styled.div`
   height: -webkit-fill-available;
-  /* width: 100%; */
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-areas:
-    "one one"
-    "two two"
-    "three three"; */
 
   @media screen and (min-width: 992px) {
     display: grid;
@@ -56,8 +48,6 @@ export const ImageContainer = styled.div`
     object-fit: cover;
     width: 100%;
     height: 100%;
-    /* max-width: 100%;
-    max-height: 100%; */
     transition: all 0.5s ease-in-out;
   }
 `;

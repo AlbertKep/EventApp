@@ -19,7 +19,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 // services
 
-// import { signIn, user } from "../../firebase/api.service";
+import { signIn } from "../../firebase/api.service";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -35,9 +35,8 @@ function SignIn() {
     setIsLoading(true);
 
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-
-      dispatch({ type: "SIGN_IN", payload: response.user });
+      signIn(email, password);
+      dispatch({ type: "SIGN_IN", payload: auth.currentUser });
       setIsLoading(false);
       setEmail("");
       setPassword("");
