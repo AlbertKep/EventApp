@@ -14,7 +14,6 @@ import hamburger from "../../assets/hamburger/icon-hamburger.svg";
 import closeMenu from "../../assets/hamburger/icon-close.svg";
 
 import { AuthContext } from "../../context/AuthContext";
-// import { auth } from "../../firebase/config";
 
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,19 +42,34 @@ function Navigation() {
       <HamburgerMenu onClick={() => setMenuIsOpen((prev) => !prev)}>
         <img src={menuIsOpen ? closeMenu : hamburger} alt="menu icon" />
       </HamburgerMenu>
+
       <Menu menuPosition={menuIsOpen ? "0" : "-100%"}>
         <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
           <StyledLink to="/">Home</StyledLink>
         </MenuItem>
+
         <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
           <StyledLink to="/events">Events</StyledLink>
         </MenuItem>
+
+        {user && (
+          <>
+            <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+              <StyledLink to="/profile">My Profile</StyledLink>
+            </MenuItem>
+
+            <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
+              <StyledLink to="/addevent">Add Event</StyledLink>
+            </MenuItem>
+          </>
+        )}
 
         {!user && (
           <>
             <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
               <StyledLink to="/signin">Sign In</StyledLink>
             </MenuItem>
+
             <MenuItem onClick={() => setMenuIsOpen((prev) => !prev)}>
               <StyledLink to="/signup">Sign Up</StyledLink>
             </MenuItem>

@@ -15,10 +15,8 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 import { auth } from "../../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 // services
-
 import { signIn } from "../../firebase/api.service";
 
 function SignIn() {
