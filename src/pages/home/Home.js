@@ -12,13 +12,9 @@ import {
 
 // svg
 import arrow from "../../assets/svg/arrow.svg";
-// images
-// import eventOne from "../../assets/images/anthony-delanoix.jpg";
-// import eventTwo from "../../assets/images/ian-dooley.jpg";
-// import eventThree from "../../assets/images/samantha-gades.jpg";
 
 import { useState, useEffect, useMemo } from "react";
-import { useWindowSize } from "../../components/hooks/useWindowSize";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { getDocsByCollectionId } from "../../firebase/api.service";
 import Loading from "../../components/loading/Loading";
 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const HomeHeader = styled.header`
   height: 90vh;
   justify-content: space-between;
+
   @media screen and (min-width: 576px) {
     display: flex;
   }
@@ -39,6 +40,7 @@ export const Event = styled.div`
     }
   }
 `;
+
 export const ImageContainer = styled.div`
   display: flex;
   height: 100%;

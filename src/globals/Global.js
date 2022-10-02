@@ -26,6 +26,10 @@ button {
   background-color: transparent;
 }
 
+input {
+  border: none;
+  background-color: transparent;
+}
 /* section {
   display: flex;
   justify-content: center;

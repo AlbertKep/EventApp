@@ -8,7 +8,6 @@ export const useWindowSize = () => {
 
   useEffect(() => {
     const screenSize = () => {
-      //console.log("jestm tu :D");
       const width = window.innerWidth;
       const height = window.innerHeight;
       setWindowSize({
