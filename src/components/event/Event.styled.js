@@ -34,7 +34,7 @@ export const EventInfo = styled.div`
 
 export const EventTitle = styled.h3`
   font-size: 1.2rem;
-  margin: 0.3em 0;
+  margin: 0.7em 0;
 `;
 
 export const EventPlace = styled.h4`

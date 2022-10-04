@@ -9,7 +9,22 @@ import Event from "../../components/event/Event";
 // svg
 import Magnifier from "../../assets/svg/magnifier.svg";
 
+//services
+import { getDocsByCollectionId } from "../../firebase/api.service";
+
+import { useState, useEffect } from "react";
+import Loading from "../../components/loading/Loading";
+
 function Events() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const results = await getDocsByCollectionId("events", { limit: 10 });
+      setEvents(results);
+    })();
+  }, []);
+
   return (
     <Container>
       <SearchEvent>
@@ -26,16 +41,12 @@ function Events() {
       </SearchEvent>
 
       <EventsContainer>
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
-        <Event />
+        {events.length !== 0 &&
+          events.map((event) => <Event key={event.id} event={event} />)}
+
+        {events.length === 0 && <Loading />}
       </EventsContainer>
+      {/* {events.length === 0 && <h2>There are no events here ;(</h2>} */}
     </Container>
   );
 }

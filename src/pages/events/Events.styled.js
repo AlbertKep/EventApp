@@ -4,6 +4,12 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h2 {
+    font-size: 2rem;
+    color: #707070;
+    margin-top: 2.5em;
+  }
 `;
 
 export const SearchEvent = styled.div`

@@ -1,4 +1,4 @@
-import EventPhoto from "../../assets/images/anthony-delanoix.jpg";
+// import EventPhoto from "../../assets/images/anthony-delanoix.jpg";
 import {
   EventCard,
   EventImage,
@@ -17,19 +17,19 @@ const buttonStyles = {
   padding: "0.5em 1em",
 };
 
-export default function Event() {
+export default function Event({ event }) {
   return (
     <EventCard>
       <EventImage>
-        <img src={EventPhoto} alt="event" />
+        <img src={event.image} alt="event" />
       </EventImage>
       <EventInfo>
-        <EventPlace>Kostrzyn, Poland</EventPlace>
+        <EventPlace>{event.place}</EventPlace>
         <EventDate>
-          <span>Monday, August 04 2022</span> -
-          <span>Monday, August 07 2022</span>
+          <span>{event.startDate}</span>
+          {event.endDate && <span> - {event.endDate}</span>}
         </EventDate>
-        <EventTitle>PolandRock Festival 2022</EventTitle>
+        <EventTitle>{event.name}</EventTitle>
 
         <Container>
           <span>45 people joined the event</span>
