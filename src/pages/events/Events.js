@@ -17,6 +17,7 @@ import Loading from "../../components/loading/Loading";
 
 function Events() {
   const [events, setEvents] = useState([]);
+  const [typedEventName, setTypedEventName] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -24,6 +25,14 @@ function Events() {
       setEvents(results);
     })();
   }, []);
+
+  const filteredEvents = events.filter((event) => {
+    return event.name.toLowerCase().includes(typedEventName.toLowerCase());
+  });
+
+  const handleInput = (e) => {
+    setTypedEventName(e.target.value);
+  };
 
   return (
     <Container>
@@ -37,16 +46,18 @@ function Events() {
           id="eventName"
           name="eventName"
           placeholder="Looking for a event?"
+          onChange={handleInput}
+          value={typedEventName}
         />
       </SearchEvent>
 
       <EventsContainer>
-        {events.length !== 0 &&
-          events.map((event) => <Event key={event.id} event={event} />)}
+        {filteredEvents.length !== 0 &&
+          filteredEvents.map((event) => <Event key={event.id} event={event} />)}
 
         {events.length === 0 && <Loading />}
       </EventsContainer>
-      {/* {events.length === 0 && <h2>There are no events here ;(</h2>} */}
+      {filteredEvents.length === 0 && <h2>There are no events here ;(</h2>}
     </Container>
   );
 }

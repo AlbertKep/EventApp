@@ -30,8 +30,17 @@ input {
   border: none;
   background-color: transparent;
 }
-/* section {
-  display: flex;
-  justify-content: center;
-} */
+
+// scroll styles
+::-webkit-scrollbar {
+  width: 1em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1C1C1C;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2127c8;
+  }
 `;
