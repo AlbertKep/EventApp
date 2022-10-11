@@ -7,9 +7,11 @@ import {
   EventPlace,
   EventDate,
   Container,
-} from "./Event.styled";
+} from "./EventCard.styled";
 
 import { Button } from "../button/Button.styled";
+
+import { Link } from "react-router-dom";
 
 const buttonStyles = {
   color: "#3137e7",
@@ -29,7 +31,11 @@ export default function Event({ event }) {
           <span>{event.startDate}</span>
           {event.endDate && <span> - {event.endDate}</span>}
         </EventDate>
-        <EventTitle>{event.name}</EventTitle>
+        <EventTitle>
+          <Link to={event.id} state={{ test: "test" }}>
+            {event.name}
+          </Link>
+        </EventTitle>
 
         <Container>
           <span>45 people joined the event</span>

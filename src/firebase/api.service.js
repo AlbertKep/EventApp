@@ -8,6 +8,8 @@ import {
 import {
   collection,
   getDocs,
+  getDoc,
+  doc,
   limit as limitFun,
   query,
 } from "firebase/firestore";
@@ -60,12 +62,6 @@ const signUp = async (name, email, password) => {
   //   });
 };
 
-// const logout = () => {
-//   signOut(auth)
-//     .then(() => console.log("Signout successful"))
-//     .catch((err) => console.log(err));
-// };
-
 const logout = async () => {
   try {
     await signOut(auth);
@@ -101,4 +97,22 @@ const getDocsByCollectionId = async (collectionId, { limit = 10 }) => {
     return [];
   }
 };
-export { signUp, logout, signIn, getDocsByCollectionId };
+
+const getSingleCollectionById = async (collectionId) => {
+  try {
+    const result = await getDoc(doc(db, "events", collectionId));
+    const event = result.data();
+
+    return event;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+export {
+  signUp,
+  logout,
+  signIn,
+  getDocsByCollectionId,
+  getSingleCollectionById,
+};

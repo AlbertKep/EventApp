@@ -5,6 +5,7 @@ import { Global } from "./globals/Global";
 import Navigation from "./components/navigation/Navigation";
 import Home from "./pages/home/Home";
 import Events from "./pages/events/Events";
+import EventDetails from "./pages/eventDetails/EventDetails";
 import SignIn from "./pages/signIn/SignIn";
 import SignUp from "./pages/signUp/SignUp";
 import Profile from "./pages/profile/Profile";
@@ -28,6 +29,7 @@ function App() {
           {/* <Route index element={<Home />} /> */}
           <Route index path="/" element={<Home />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:eventId" element={<EventDetails />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<ProtectedRoutes />}>

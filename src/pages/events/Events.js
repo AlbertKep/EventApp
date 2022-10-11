@@ -5,7 +5,7 @@ import {
   EventsContainer,
 } from "./Events.styled";
 
-import Event from "../../components/event/Event";
+import EventCard from "../../components/eventCard/EventCard";
 // svg
 import Magnifier from "../../assets/svg/magnifier.svg";
 
@@ -53,7 +53,9 @@ function Events() {
 
       <EventsContainer>
         {filteredEvents.length !== 0 &&
-          filteredEvents.map((event) => <Event key={event.id} event={event} />)}
+          filteredEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
 
         {events.length === 0 && <Loading />}
       </EventsContainer>

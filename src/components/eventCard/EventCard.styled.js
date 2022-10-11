@@ -8,7 +8,6 @@ export const EventCard = styled.div`
   border-radius: 10px;
 
   @media screen and (min-width: 992px) {
-    cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:hover {
@@ -26,19 +25,26 @@ export const EventImage = styled.div`
 
 export const EventInfo = styled.div`
   padding: 1em;
-
-  h4 {
-    color: #3137e7;
-  }
 `;
 
 export const EventTitle = styled.h3`
+  cursor: pointer;
   font-size: 1.2rem;
   margin: 0.7em 0;
+
+  a {
+    text-decoration: transparent;
+    border-bottom: 2px solid transparent;
+    color: #fff;
+
+    &:hover {
+      border-bottom: 2px solid #fff;
+    }
+  }
 `;
 
 export const EventPlace = styled.h4`
-  color: #3137e7;
+  /* color: #3137e7; */
   font-size: 1.1rem;
 `;
 
