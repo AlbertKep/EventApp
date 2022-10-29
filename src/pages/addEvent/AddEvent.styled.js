@@ -15,6 +15,11 @@ export const AddEventForm = styled.form`
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
+
+  p {
+    cursor: pointer;
+    font-weight: 700;
+  }
 `;
 
 export const ColumnController = styled.div`
@@ -105,6 +110,32 @@ export const AddEventInputContainer = styled(InputContainer)`
   input {
     display: none;
   }
+`;
+
+export const DateAndTimeContainer = styled(InputContainer)`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0;
+
+  label {
+    top: -30px;
+  }
+
+  input {
+    ::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(19%) sepia(39%) saturate(5981%) hue-rotate(231deg)
+        brightness(104%) contrast(94%);
+    }
+  }
+`;
+export const Date = styled(InputContainer)`
+  flex-basis: 50%;
+`;
+
+export const Time = styled(InputContainer)`
+  flex-basis: 40%;
 `;
 
 export const ButtonContainer = styled(InputContainer)`

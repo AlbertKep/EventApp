@@ -5,7 +5,10 @@ import {
   ColumnController,
   AddEventForm,
   InputContainer,
+  Date,
+  Time,
   AddEventInputContainer,
+  DateAndTimeContainer,
   ButtonContainer,
 } from "./AddEvent.styled";
 
@@ -21,7 +24,15 @@ export default function AddEvent() {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [endTime, setEndTime] = useState("");
 
+  // today's date
+  const minDate = new window.Date().toLocaleDateString("en-ca");
+
+  const [showEndDateAndTime, setShowEndDateAndTime] = useState(false);
   return (
     <Container>
       <AddEventForm>
@@ -37,10 +48,59 @@ export default function AddEvent() {
             <label htmlFor="name">Name</label>
           </InputContainer>
 
-          <InputContainer>
-            <input type="text" id="date" />
-            <label htmlFor="date">Date</label>
-          </InputContainer>
+          <DateAndTimeContainer>
+            <Date>
+              <input
+                type="date"
+                id="startDate"
+                value={startDate}
+                min={minDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                required
+              />
+              <label htmlFor="startDate">Start date</label>
+            </Date>
+            <Time>
+              <input
+                type="time"
+                id="startTime"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+              />
+              <label htmlFor="startTime">Start time</label>
+            </Time>
+          </DateAndTimeContainer>
+
+          {showEndDateAndTime && (
+            <DateAndTimeContainer>
+              <Date>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  min={minDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  required
+                />
+                <label htmlFor="endDate">End date</label>
+              </Date>
+              <Time>
+                <input
+                  type="time"
+                  id="endTime"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  required
+                />
+                <label htmlFor="endTime">End time</label>
+              </Time>
+            </DateAndTimeContainer>
+          )}
+
+          <p onClick={() => setShowEndDateAndTime(!showEndDateAndTime)}>
+            {!showEndDateAndTime ? "+" : "-"} End date and time
+          </p>
 
           <InputContainer>
             <input
