@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
 import {
   collection,
   getDocs,
@@ -12,6 +13,7 @@ import {
   doc,
   limit as limitFun,
   query,
+  addDoc,
 } from "firebase/firestore";
 
 //let user = auth.currentUser;
@@ -109,10 +111,19 @@ const getSingleCollectionById = async (collectionId) => {
     return [];
   }
 };
+
+const addNewEvent = async (event) => {
+  try {
+    await addDoc(collection(db, "events"), event);
+  } catch (error) {
+    console.log(error);
+  }
+};
 export {
   signUp,
   logout,
   signIn,
   getDocsByCollectionId,
   getSingleCollectionById,
+  addNewEvent,
 };

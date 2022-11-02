@@ -11,6 +11,7 @@ export const Container = styled.section`
 `;
 
 export const AddEventForm = styled.form`
+  margin-top: 2em;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -24,7 +25,7 @@ export const AddEventForm = styled.form`
 
 export const ColumnController = styled.div`
   flex-basis: 80%;
-  padding: 1em;
+  /* padding: 1em; */
 
   @media screen and (min-width: 768px) {
     flex-basis: 35%;
@@ -46,7 +47,7 @@ export const InputContainer = styled.div`
     transition: all 0.2s ease-in-out;
 
     @media screen and (min-width: 768px) {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -72,6 +73,7 @@ export const InputContainer = styled.div`
   }
 
   textarea {
+    font-family: "Roboto";
     margin-top: 1em;
     font-size: 1.3rem;
     resize: none;
@@ -97,7 +99,16 @@ export const InputContainer = styled.div`
 `;
 
 export const AddEventInputContainer = styled(InputContainer)`
-  margin-bottom: 5em;
+  /* margin-bottom: 5em; */
+  padding-top: 0.5em;
+  div {
+    max-width: 250px;
+  }
+
+  img {
+    width: 100%;
+  }
+
   label {
     cursor: pointer;
     top: -30px;
@@ -123,6 +134,7 @@ export const DateAndTimeContainer = styled(InputContainer)`
   }
 
   input {
+    font-family: "Roboto";
     ::-webkit-calendar-picker-indicator {
       cursor: pointer;
       filter: invert(19%) sepia(39%) saturate(5981%) hue-rotate(231deg)

@@ -12,7 +12,15 @@ import {
   ButtonContainer,
 } from "./AddEvent.styled";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+// import { storage } from "../../firebase/config";
+// import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+
+// services
+import { addNewEvent } from "../../firebase/api.service";
+
+//context
+import { AuthContext } from "../../context/AuthContext";
 
 const buttonStyles = {
   color: "#3137e7",
@@ -20,19 +28,37 @@ const buttonStyles = {
   padding: "0.5em 1em",
 };
 
+// today's date
+const minDate = new window.Date().toLocaleDateString("en-ca");
+
 export default function AddEvent() {
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const { user } = useContext(AuthContext);
+  const [newEvent, setNewEvent] = useState({
+    createdBy: user.displayName,
+    userId: user.uid,
+    name: "",
+    location: "",
+    description: "",
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
+    imageUrl: "",
+  });
 
-  // today's date
-  const minDate = new window.Date().toLocaleDateString("en-ca");
-
+  const [image, setImage] = useState(null);
   const [showEndDateAndTime, setShowEndDateAndTime] = useState(false);
+
+  // const imageListRef = ref(storage, "images/");
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(user);
+    // if (!image) return;
+    // const imageRef = ref(storage, `images/${image.name}`);
+    // uploadBytes(imageRef, image).then(() => alert("Image Uploaded"));
+    addNewEvent(newEvent);
+  };
+
   return (
     <Container>
       <AddEventForm>
@@ -41,8 +67,10 @@ export default function AddEvent() {
             <input
               type="text"
               id="name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              value={newEvent.name}
+              onChange={(e) =>
+                setNewEvent((prev) => ({ ...prev, name: e.target.value }))
+              }
               required
             />
             <label htmlFor="name">Name</label>
@@ -53,9 +81,14 @@ export default function AddEvent() {
               <input
                 type="date"
                 id="startDate"
-                value={startDate}
+                value={newEvent.startDate}
                 min={minDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={(e) =>
+                  setNewEvent((prev) => ({
+                    ...prev,
+                    startDate: e.target.value,
+                  }))
+                }
                 required
               />
               <label htmlFor="startDate">Start date</label>
@@ -64,8 +97,13 @@ export default function AddEvent() {
               <input
                 type="time"
                 id="startTime"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
+                value={newEvent.startTime}
+                onChange={(e) =>
+                  setNewEvent((prev) => ({
+                    ...prev,
+                    startTime: e.target.value,
+                  }))
+                }
                 required
               />
               <label htmlFor="startTime">Start time</label>
@@ -78,9 +116,14 @@ export default function AddEvent() {
                 <input
                   type="date"
                   id="endDate"
-                  value={endDate}
-                  min={minDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  value={newEvent.endDate}
+                  min={newEvent.startDate ? newEvent.startDate : minDate}
+                  onChange={(e) =>
+                    setNewEvent((prev) => ({
+                      ...prev,
+                      endDate: e.target.value,
+                    }))
+                  }
                   required
                 />
                 <label htmlFor="endDate">End date</label>
@@ -89,8 +132,13 @@ export default function AddEvent() {
                 <input
                   type="time"
                   id="endTime"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
+                  value={newEvent.endTime}
+                  onChange={(e) =>
+                    setNewEvent((prev) => ({
+                      ...prev,
+                      endTime: e.target.value,
+                    }))
+                  }
                   required
                 />
                 <label htmlFor="endTime">End time</label>
@@ -106,8 +154,10 @@ export default function AddEvent() {
             <input
               type="text"
               id="location"
-              onChange={(e) => setLocation(e.target.value)}
-              value={location}
+              value={newEvent.location}
+              onChange={(e) =>
+                setNewEvent((prev) => ({ ...prev, location: e.target.value }))
+              }
               required
             />
             <label htmlFor="name">Location</label>
@@ -116,8 +166,25 @@ export default function AddEvent() {
 
         <ColumnController>
           <AddEventInputContainer>
+            {image && (
+              <div>
+                <img src={URL.createObjectURL(image)} alt="event" />
+              </div>
+            )}
+
             <label htmlFor="image">
-              <input type="file" id="image" />+ Add image
+              <input
+                type="file"
+                id="image"
+                onChange={(e) => {
+                  setNewEvent((prev) => ({
+                    ...prev,
+                    imageUrl: e.target.files[0].name,
+                  }));
+                  setImage(e.target.files[0]);
+                }}
+              />
+              + Add image
             </label>
           </AddEventInputContainer>
 
@@ -127,15 +194,22 @@ export default function AddEvent() {
               id="description"
               cols="20"
               rows="10"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
+              value={newEvent.description}
+              onChange={(e) =>
+                setNewEvent((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
               required
             ></textarea>
             <label htmlFor="description"> Description</label>
           </InputContainer>
 
           <ButtonContainer>
-            <Button buttonStyles={buttonStyles}>Add Event</Button>
+            <Button buttonStyles={buttonStyles} onClick={handleClick}>
+              Add Event
+            </Button>
           </ButtonContainer>
         </ColumnController>
       </AddEventForm>
