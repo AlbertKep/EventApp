@@ -12,6 +12,9 @@ import {
   ButtonContainer,
 } from "./AddEvent.styled";
 
+//components
+import Modal from "../../components/modal/Modal";
+
 import { useState, useContext } from "react";
 // import { storage } from "../../firebase/config";
 // import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
@@ -213,6 +216,9 @@ export default function AddEvent() {
           </ButtonContainer>
         </ColumnController>
       </AddEventForm>
+      <Modal>
+        <h1>Modal</h1>
+      </Modal>
     </Container>
   );
 }

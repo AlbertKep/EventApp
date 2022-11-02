@@ -22,7 +22,7 @@ export const Logo = styled.div`
   }
 `;
 export const HamburgerMenu = styled.div`
-  z-index: 999;
+  z-index: 888;
   cursor: pointer;
 
   @media screen and (min-width: 576px) {
