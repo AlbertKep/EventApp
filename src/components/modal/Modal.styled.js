@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
   color: #000;
   position: fixed;
   top: 0;
@@ -15,8 +15,6 @@ export const ModalBackdrop = styled.div`
 `;
 export const ModalContainer = styled.div`
   background-color: #fff;
-  width: 100%;
-  max-width: 275px;
   min-height: 300px;
   border-radius: 15px;
   display: flex;

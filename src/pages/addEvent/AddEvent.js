@@ -10,12 +10,15 @@ import {
   AddEventInputContainer,
   DateAndTimeContainer,
   ButtonContainer,
+  EventModalContent,
 } from "./AddEvent.styled";
 
 //components
 import Modal from "../../components/modal/Modal";
+import ApproveIcon from "../../components/svgComponents/ApproveIcon";
 
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 // import { storage } from "../../firebase/config";
 // import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
@@ -28,6 +31,12 @@ import { AuthContext } from "../../context/AuthContext";
 const buttonStyles = {
   color: "#3137e7",
   borderColor: "#3137e7",
+  padding: "0.5em 1em",
+};
+
+const buttonModalStyles = {
+  color: "#2127c8",
+  borderColor: "#2127c8",
   padding: "0.5em 1em",
 };
 
@@ -51,20 +60,22 @@ export default function AddEvent() {
 
   const [image, setImage] = useState(null);
   const [showEndDateAndTime, setShowEndDateAndTime] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
 
   // const imageListRef = ref(storage, "images/");
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
     // if (!image) return;
     // const imageRef = ref(storage, `images/${image.name}`);
     // uploadBytes(imageRef, image).then(() => alert("Image Uploaded"));
     addNewEvent(newEvent);
+    setShowSuccessModal(true);
   };
 
   return (
     <Container>
-      <AddEventForm>
+      <AddEventForm onSubmit={handleSubmit}>
         <ColumnController>
           <InputContainer>
             <input
@@ -210,15 +221,24 @@ export default function AddEvent() {
           </InputContainer>
 
           <ButtonContainer>
-            <Button buttonStyles={buttonStyles} onClick={handleClick}>
-              Add Event
-            </Button>
+            <Button buttonStyles={buttonStyles}>Add Event</Button>
           </ButtonContainer>
         </ColumnController>
       </AddEventForm>
-      <Modal>
-        <h1>Modal</h1>
-      </Modal>
+      {showSuccessModal && (
+        <Modal>
+          <EventModalContent>
+            <ApproveIcon />
+            <h3>The event has been successfully added!</h3>
+            <Button
+              buttonStyles={buttonModalStyles}
+              onClick={() => navigate("/")}
+            >
+              OK
+            </Button>
+          </EventModalContent>
+        </Modal>
+      )}
     </Container>
   );
 }

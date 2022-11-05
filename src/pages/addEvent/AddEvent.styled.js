@@ -153,3 +153,14 @@ export const Time = styled(InputContainer)`
 export const ButtonContainer = styled(InputContainer)`
   text-align: right;
 `;
+
+export const EventModalContent = styled.div`
+  padding: 1em;
+  color: #2127c8;
+  font-size: 0.8rem;
+  text-align: center;
+
+  h3 {
+    margin: 1em 0 1.5em;
+  }
+`;
