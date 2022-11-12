@@ -17,7 +17,7 @@ import {
 import Modal from "../../components/modal/Modal";
 import ApproveIcon from "../../components/svgComponents/ApproveIcon";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 // import { storage } from "../../firebase/config";
 // import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
@@ -43,19 +43,128 @@ const buttonModalStyles = {
 // today's date
 const minDate = new window.Date().toLocaleDateString("en-ca");
 
+const checkIfFormIsValid = (values) => {
+  let isValid = true;
+
+  const clone = JSON.parse(JSON.stringify(values)); // deep copy
+  Object.entries(clone).forEach(([fieldName, fieldInfo]) => {
+    // validators for field name
+    if (fieldName === "name") {
+      if (fieldInfo.value.length < 3) {
+        isValid = false;
+        clone[fieldName].error = "The name should contains min. 3 characters";
+      }
+
+      if (fieldInfo.value.length > 20) {
+        isValid = false;
+        clone[fieldName].error = "The name should contains min. 3 signs";
+      }
+    }
+
+    // validators for fields date and time
+    if (fieldName === "startDate") {
+      if (fieldInfo.value === "") {
+        isValid = false;
+        clone[fieldName].error = "The event should contains start date";
+      }
+    }
+
+    if (fieldName === "startTime") {
+      if (fieldInfo.value === "") {
+        isValid = false;
+        clone[fieldName].error = "The event should contains start time";
+      }
+    }
+
+    // check if start date is > than end date
+    if (
+      clone.startDate.value.length !== 0 &&
+      clone.endDate.value.length !== 0
+    ) {
+      if (clone.startDate.value > clone.endDate.value) {
+        isValid = false;
+        clone.endDate.error =
+          "The start date of the event is later than the end date";
+      }
+    }
+
+    // validators for field location
+    if (fieldName === "location") {
+      if (fieldInfo.value.length < 3) {
+        isValid = false;
+        clone[fieldName].error = "The location should contains min. 3 signs";
+      }
+    }
+
+    // validators for field description
+    if (fieldName === "description") {
+      if (fieldInfo.value.length <= 0) {
+        isValid = false;
+        clone[fieldName].error = "The description should not be empty";
+      }
+    }
+
+    // validators for field image
+    if (fieldName === "image") {
+      if (fieldInfo.value.length === 0) {
+        isValid = false;
+        clone[fieldName].error = "The event should contains image";
+      }
+    }
+  });
+
+  return {
+    isValid,
+    event: clone,
+  };
+};
+
 export default function AddEvent() {
   const { user } = useContext(AuthContext);
+  const userInfo = useMemo(
+    () => ({
+      createdBy: user.displayName,
+      userId: user.uid,
+    }),
+    [user]
+  );
   const [newEvent, setNewEvent] = useState({
-    createdBy: user.displayName,
-    userId: user.uid,
-    name: "",
-    location: "",
-    description: "",
-    startDate: "",
-    startTime: "",
-    endDate: "",
-    endTime: "",
-    imageUrl: "",
+    name: {
+      value: "",
+      // validators: [
+      //   (value) => value > 8,
+      //   (value) => value < 20,
+      // ],
+      error: null,
+    },
+    location: {
+      value: "",
+      error: null,
+    },
+    description: {
+      value: "",
+      error: null,
+    },
+    startDate: {
+      value: "",
+      error: null,
+    },
+    startTime: {
+      value: "",
+      error: null,
+    },
+    endDate: {
+      value: "",
+      error: null,
+    },
+    endTime: {
+      value: "",
+      error: null,
+    },
+    image: {
+      value: "",
+      error: null,
+    },
   });
 
   const [image, setImage] = useState(null);
@@ -66,28 +175,65 @@ export default function AddEvent() {
   // const imageListRef = ref(storage, "images/");
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const { isValid, event } = checkIfFormIsValid(newEvent);
+    if (!isValid) {
+      setNewEvent(event);
+      return;
+    }
+
+    const formData = Object.entries(newEvent).reduce(
+      (collector, [fieldName, fieldInfo]) => ({
+        ...collector,
+        [fieldName]: fieldInfo.value,
+      }),
+      {}
+    );
+
+    const eventData = {
+      ...userInfo,
+      ...formData,
+    };
+
     // if (!image) return;
     // const imageRef = ref(storage, `images/${image.name}`);
     // uploadBytes(imageRef, image).then(() => alert("Image Uploaded"));
-    addNewEvent(newEvent);
+    // console.log(eventData);
+    addNewEvent(eventData);
     setShowSuccessModal(true);
+  };
+
+  const changeHandler = (e) => {
+    const { value, name } = e.target;
+    if (name === "image") {
+      // e.target.files[0].name,
+      console.log(e.target.files[0].name);
+      setImage(e.target.files[0]);
+    }
+    setNewEvent((prev) => ({
+      ...prev,
+      [name]: {
+        error: null,
+        value,
+      },
+    }));
   };
 
   return (
     <Container>
-      <AddEventForm onSubmit={handleSubmit}>
+      <AddEventForm noValidate onSubmit={handleSubmit}>
         <ColumnController>
           <InputContainer>
             <input
               type="text"
               id="name"
-              value={newEvent.name}
-              onChange={(e) =>
-                setNewEvent((prev) => ({ ...prev, name: e.target.value }))
-              }
+              name="name"
+              value={newEvent.name.value}
+              onChange={changeHandler}
               required
             />
             <label htmlFor="name">Name</label>
+            {newEvent.name.error && <span>{newEvent.name.error}</span>}
           </InputContainer>
 
           <DateAndTimeContainer>
@@ -95,14 +241,10 @@ export default function AddEvent() {
               <input
                 type="date"
                 id="startDate"
-                value={newEvent.startDate}
+                name="startDate"
+                value={newEvent.startDate.value}
                 min={minDate}
-                onChange={(e) =>
-                  setNewEvent((prev) => ({
-                    ...prev,
-                    startDate: e.target.value,
-                  }))
-                }
+                onChange={changeHandler}
                 required
               />
               <label htmlFor="startDate">Start date</label>
@@ -111,18 +253,16 @@ export default function AddEvent() {
               <input
                 type="time"
                 id="startTime"
-                value={newEvent.startTime}
-                onChange={(e) =>
-                  setNewEvent((prev) => ({
-                    ...prev,
-                    startTime: e.target.value,
-                  }))
-                }
+                name="startTime"
+                value={newEvent.startTime.value}
+                onChange={changeHandler}
                 required
               />
               <label htmlFor="startTime">Start time</label>
             </Time>
           </DateAndTimeContainer>
+          {newEvent.startDate.error && <span>{newEvent.startDate.error}</span>}
+          {newEvent.startTime.error && <span>{newEvent.startTime.error}</span>}
 
           {showEndDateAndTime && (
             <DateAndTimeContainer>
@@ -130,14 +270,14 @@ export default function AddEvent() {
                 <input
                   type="date"
                   id="endDate"
-                  value={newEvent.endDate}
-                  min={newEvent.startDate ? newEvent.startDate : minDate}
-                  onChange={(e) =>
-                    setNewEvent((prev) => ({
-                      ...prev,
-                      endDate: e.target.value,
-                    }))
+                  name="endDate"
+                  value={newEvent.endDate.value}
+                  min={
+                    newEvent.startDate.value
+                      ? newEvent.startDate.value
+                      : minDate
                   }
+                  onChange={changeHandler}
                   required
                 />
                 <label htmlFor="endDate">End date</label>
@@ -146,19 +286,16 @@ export default function AddEvent() {
                 <input
                   type="time"
                   id="endTime"
-                  value={newEvent.endTime}
-                  onChange={(e) =>
-                    setNewEvent((prev) => ({
-                      ...prev,
-                      endTime: e.target.value,
-                    }))
-                  }
+                  name="endTime"
+                  value={newEvent.endTime.value}
+                  onChange={changeHandler}
                   required
                 />
                 <label htmlFor="endTime">End time</label>
               </Time>
             </DateAndTimeContainer>
           )}
+          {newEvent.endDate.error && <span>{newEvent.endDate.error}</span>}
 
           <p onClick={() => setShowEndDateAndTime(!showEndDateAndTime)}>
             {!showEndDateAndTime ? "+" : "-"} End date and time
@@ -168,13 +305,13 @@ export default function AddEvent() {
             <input
               type="text"
               id="location"
-              value={newEvent.location}
-              onChange={(e) =>
-                setNewEvent((prev) => ({ ...prev, location: e.target.value }))
-              }
+              name="location"
+              value={newEvent.location.value}
+              onChange={changeHandler}
               required
             />
-            <label htmlFor="name">Location</label>
+            <label htmlFor="location">Location</label>
+            {newEvent.location.error && <span>{newEvent.location.error}</span>}
           </InputContainer>
         </ColumnController>
 
@@ -190,34 +327,28 @@ export default function AddEvent() {
               <input
                 type="file"
                 id="image"
-                onChange={(e) => {
-                  setNewEvent((prev) => ({
-                    ...prev,
-                    imageUrl: e.target.files[0].name,
-                  }));
-                  setImage(e.target.files[0]);
-                }}
+                name="image"
+                onChange={changeHandler}
               />
               + Add image
             </label>
+            {newEvent.image.error && <span>{newEvent.image.error}</span>}
           </AddEventInputContainer>
 
           <InputContainer>
             <textarea
-              name="description"
               id="description"
+              name="description"
               cols="20"
               rows="10"
-              value={newEvent.description}
-              onChange={(e) =>
-                setNewEvent((prev) => ({
-                  ...prev,
-                  description: e.target.value,
-                }))
-              }
+              value={newEvent.description.value}
+              onChange={changeHandler}
               required
             ></textarea>
             <label htmlFor="description"> Description</label>
+            {newEvent.description.error && (
+              <span>{newEvent.description.error}</span>
+            )}
           </InputContainer>
 
           <ButtonContainer>
