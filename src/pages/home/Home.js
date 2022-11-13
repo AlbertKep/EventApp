@@ -13,10 +13,28 @@ import {
 // svg
 import arrow from "../../assets/svg/arrow.svg";
 
+//components
+import Loading from "../../components/loading/Loading";
+
+import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { getDocsByCollectionId } from "../../firebase/api.service";
-import Loading from "../../components/loading/Loading";
+
+//animation settings
+const pathVariants = {
+  initialSVG: {
+    x: -15,
+  },
+  animateSVG: {
+    x: 10,
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+      yoyo: Infinity,
+    },
+  },
+};
 
 function Home() {
   const [events, setEvents] = useState([]);
@@ -54,7 +72,12 @@ function Home() {
 
           <HeadingContainer>
             <Heading>Create, Choose Your Dream Event</Heading>
-            <Arrow>
+            <Arrow
+              as={motion.div}
+              variants={pathVariants}
+              initial="initialSVG"
+              animate="animateSVG"
+            >
               <img src={arrow} alt="arrow svg" />
             </Arrow>
           </HeadingContainer>

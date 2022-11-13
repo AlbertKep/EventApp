@@ -110,4 +110,5 @@ export const Heading = styled.h1`
 
 export const Arrow = styled.div`
   margin-top: 1.5em;
+  max-width: 250px;
 `;
