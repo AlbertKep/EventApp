@@ -11,6 +11,7 @@ import {
   DateAndTimeContainer,
   ButtonContainer,
   EventModalContent,
+  ErrorValidationInfo,
 } from "./AddEvent.styled";
 
 //components
@@ -233,7 +234,9 @@ export default function AddEvent() {
               required
             />
             <label htmlFor="name">Name</label>
-            {newEvent.name.error && <span>{newEvent.name.error}</span>}
+            {newEvent.name.error && (
+              <ErrorValidationInfo>{newEvent.name.error}</ErrorValidationInfo>
+            )}
           </InputContainer>
 
           <DateAndTimeContainer>
@@ -248,6 +251,11 @@ export default function AddEvent() {
                 required
               />
               <label htmlFor="startDate">Start date</label>
+              {newEvent.startDate.error && (
+                <ErrorValidationInfo>
+                  {newEvent.startDate.error}
+                </ErrorValidationInfo>
+              )}
             </Date>
             <Time>
               <input
@@ -259,43 +267,52 @@ export default function AddEvent() {
                 required
               />
               <label htmlFor="startTime">Start time</label>
+              {newEvent.startTime.error && (
+                <ErrorValidationInfo>
+                  {newEvent.startTime.error}
+                </ErrorValidationInfo>
+              )}
             </Time>
           </DateAndTimeContainer>
-          {newEvent.startDate.error && <span>{newEvent.startDate.error}</span>}
-          {newEvent.startTime.error && <span>{newEvent.startTime.error}</span>}
 
           {showEndDateAndTime && (
-            <DateAndTimeContainer>
-              <Date>
-                <input
-                  type="date"
-                  id="endDate"
-                  name="endDate"
-                  value={newEvent.endDate.value}
-                  min={
-                    newEvent.startDate.value
-                      ? newEvent.startDate.value
-                      : minDate
-                  }
-                  onChange={changeHandler}
-                  required
-                />
-                <label htmlFor="endDate">End date</label>
-              </Date>
-              <Time>
-                <input
-                  type="time"
-                  id="endTime"
-                  name="endTime"
-                  value={newEvent.endTime.value}
-                  onChange={changeHandler}
-                  required
-                />
-                <label htmlFor="endTime">End time</label>
-              </Time>
-            </DateAndTimeContainer>
+            <>
+              <DateAndTimeContainer>
+                <Date>
+                  <input
+                    type="date"
+                    id="endDate"
+                    name="endDate"
+                    value={newEvent.endDate.value}
+                    min={
+                      newEvent.startDate.value
+                        ? newEvent.startDate.value
+                        : minDate
+                    }
+                    onChange={changeHandler}
+                    required
+                  />
+                  <label htmlFor="endDate">End date</label>
+                </Date>
+                <Time>
+                  <input
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    value={newEvent.endTime.value}
+                    onChange={changeHandler}
+                    required
+                  />
+                  <label htmlFor="endTime">End time</label>
+                </Time>
+              </DateAndTimeContainer>
+              {newEvent.endDate.error && (
+                <ErrorValidationInfo>
+                  {newEvent.endDate.error}
+                </ErrorValidationInfo>
+              )}
+            </>
           )}
-          {newEvent.endDate.error && <span>{newEvent.endDate.error}</span>}
 
           <p onClick={() => setShowEndDateAndTime(!showEndDateAndTime)}>
             {!showEndDateAndTime ? "+" : "-"} End date and time
@@ -311,7 +328,11 @@ export default function AddEvent() {
               required
             />
             <label htmlFor="location">Location</label>
-            {newEvent.location.error && <span>{newEvent.location.error}</span>}
+            {newEvent.location.error && (
+              <ErrorValidationInfo>
+                {newEvent.location.error}
+              </ErrorValidationInfo>
+            )}
           </InputContainer>
         </ColumnController>
 
@@ -332,7 +353,9 @@ export default function AddEvent() {
               />
               + Add image
             </label>
-            {newEvent.image.error && <span>{newEvent.image.error}</span>}
+            {newEvent.image.error && (
+              <ErrorValidationInfo>{newEvent.image.error}</ErrorValidationInfo>
+            )}
           </AddEventInputContainer>
 
           <InputContainer>
@@ -347,7 +370,9 @@ export default function AddEvent() {
             ></textarea>
             <label htmlFor="description"> Description</label>
             {newEvent.description.error && (
-              <span>{newEvent.description.error}</span>
+              <ErrorValidationInfo>
+                {newEvent.description.error}
+              </ErrorValidationInfo>
             )}
           </InputContainer>
 

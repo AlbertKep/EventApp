@@ -25,7 +25,11 @@ export const AddEventForm = styled.form`
 
 export const ColumnController = styled.div`
   flex-basis: 80%;
-  /* padding: 1em; */
+
+  //add end date and time paragraph
+  p {
+    margin-top: 1em;
+  }
 
   @media screen and (min-width: 768px) {
     flex-basis: 35%;
@@ -143,11 +147,13 @@ export const DateAndTimeContainer = styled(InputContainer)`
   }
 `;
 export const Date = styled(InputContainer)`
-  flex-basis: 50%;
+  flex-basis: 45%;
+  margin-bottom: 1em;
 `;
 
 export const Time = styled(InputContainer)`
-  flex-basis: 40%;
+  flex-basis: 45%;
+  margin-bottom: 1em;
 `;
 
 export const ButtonContainer = styled(InputContainer)`
@@ -162,5 +168,16 @@ export const EventModalContent = styled.div`
 
   h3 {
     margin: 1em 0 1.5em;
+  }
+`;
+
+export const ErrorValidationInfo = styled.span`
+  display: block;
+  color: #ee4040;
+  margin: 0.5em 0;
+  font-size: 0.8rem;
+
+  @media screen and (min-width: 992px) {
+    font-size: 1rem;
   }
 `;
