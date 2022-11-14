@@ -21,6 +21,13 @@ import { useNavigate } from "react-router-dom";
 // services
 import { logout } from "../../firebase/api.service";
 
+const buttonStyles = {
+  color: "#fff",
+  borderColor: "#fff",
+  padding: "0.5em 1em",
+  fontSize: "1em",
+};
+
 function Navigation() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const { user, dispatch } = useContext(AuthContext);
@@ -78,7 +85,9 @@ function Navigation() {
 
         {user && (
           <MenuItem>
-            <Button onClick={() => handleClick()}>Logout</Button>
+            <Button buttonStyles={buttonStyles} onClick={() => handleClick()}>
+              Logout
+            </Button>
           </MenuItem>
         )}
       </Menu>

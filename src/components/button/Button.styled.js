@@ -9,6 +9,8 @@ export const Button = styled.button`
   border-color: ${({ buttonStyles }) =>
     buttonStyles ? buttonStyles.borderColor : "#fff"};
   color: ${({ buttonStyles }) => (buttonStyles ? buttonStyles.color : "#fff")};
+  font-size: ${({ buttonStyles }) =>
+    buttonStyles ? buttonStyles.fontSize : ""};
 
   &:hover {
     background-color: #fff;
