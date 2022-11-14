@@ -14,24 +14,63 @@ export const Form = styled.form`
 `;
 
 export const InputContainer = styled.div`
+  margin: 2em auto;
   position: relative;
-  margin-bottom: 1em;
+  color: #fff;
+  width: 80%;
+  max-width: 400px;
+
   &:last-child {
-    margin-top: 3em;
+    margin-top: 5em;
   }
+
   label {
+    margin-right: 1.3em;
     position: absolute;
-    font-size: 0.9rem;
+    bottom: 25px;
+    left: 0;
+    font-weight: 700;
+    transition: all 0.2s ease-in-out;
+
+    @media screen and (min-width: 768px) {
+      font-size: 1.2rem;
+    }
   }
 
   input {
-    background-color: transparent;
-    outline: 0;
-    border: none;
-    border-bottom: 1px solid white;
-    padding: 1.3em 0 0.75em;
+    outline: none;
+    fill: none;
+    width: 100%;
     color: #fff;
-    font-size: 1.2rem;
+    border-bottom: 2px solid #fff;
+    padding: 0.5em;
+    font-size: 1.3rem;
+    padding-top: 2em;
+
+    &:focus {
+      border-color: #3137e7;
+      background-color: transparent;
+    }
+
+    &:active {
+      background-color: transparent;
+    }
+
+    &:required:focus + label,
+    &:required:valid + label {
+      border-color: #3137e7;
+      color: #3137e7;
+      font-size: 1rem;
+      bottom: 55px;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      transition: background-color 5000s;
+      -webkit-text-fill-color: #fff !important;
+    }
   }
 `;
 

@@ -54,22 +54,26 @@ function SignIn() {
           </ImageContainer>
           <Form>
             <InputContainer>
-              <label htmlFor="email">Email Address</label>
               <input
                 type="text"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                autoComplete="off"
+                required
               />
+              <label htmlFor="email">Email Address</label>
             </InputContainer>
             <InputContainer>
-              <label htmlFor="password">Password</label>
               <input
                 type="text"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                autoComplete="off"
+                required
               />
+              <label htmlFor="password">Password</label>
             </InputContainer>
             <InputContainer>
               <FormButton>Sign In</FormButton>

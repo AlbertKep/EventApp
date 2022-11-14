@@ -59,31 +59,37 @@ function SignUp() {
 
           <Form onSubmit={handleSubmit}>
             <InputContainer>
-              <label htmlFor="username">Username</label>
               <input
                 type="text"
                 id="username"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
+                autoComplete="off"
+                required
               />
+              <label htmlFor="username">Username</label>
             </InputContainer>
             <InputContainer>
-              <label htmlFor="email">Email Address</label>
               <input
                 type="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                autoComplete="off"
+                required
               />
+              <label htmlFor="email">Email Address</label>
             </InputContainer>
             <InputContainer>
-              <label htmlFor="password">Password</label>
               <input
                 type="text"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                autoComplete="off"
+                required
               />
+              <label htmlFor="password">Password</label>
             </InputContainer>
             <InputContainer>
               <FormButton>Sign Up</FormButton>
