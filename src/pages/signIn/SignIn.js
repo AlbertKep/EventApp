@@ -7,6 +7,7 @@ import {
   InputContainer,
   FormButton,
   TextContainer,
+  BorderBottom,
 } from "../../components/form/Form.styled";
 import Loading from "../../components/loading/Loading";
 
@@ -14,10 +15,26 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-import { auth } from "../../firebase/config";
+import { motion } from "framer-motion";
 
 // services
+import { auth } from "../../firebase/config";
 import { signIn } from "../../firebase/api.service";
+
+const pathVariants = {
+  initialSVG: {
+    y: 5,
+  },
+  animateSVG: {
+    y: 10,
+    transition: {
+      duration: 0.75,
+      ease: "linear",
+      repeat: Infinity,
+      repeatType: "reverse",
+    },
+  },
+};
 
 function SignIn() {
   const navigate = useNavigate();
@@ -82,7 +99,15 @@ function SignIn() {
           {error && <p>{error}</p>}
           <TextContainer>
             <p>Have not account yet?</p>
-            <span onClick={() => navigate("/signup")}>Sign up now!</span>
+            <span onClick={() => navigate("/signup")}>
+              Sign up now!
+              <BorderBottom
+                as={motion.span}
+                variants={pathVariants}
+                initial={"initialSVG"}
+                animate={"animateSVG"}
+              />
+            </span>
           </TextContainer>
         </FormContainer>
       )}

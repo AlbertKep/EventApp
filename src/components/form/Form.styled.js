@@ -63,14 +63,6 @@ export const InputContainer = styled.div`
       font-size: 1rem;
       bottom: 55px;
     }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-      transition: background-color 5000s;
-      -webkit-text-fill-color: #fff !important;
-    }
   }
 `;
 
@@ -97,8 +89,26 @@ export const TextContainer = styled.div`
   }
 
   span {
+    position: relative;
     cursor: pointer;
-    padding-bottom: 0.3em;
-    border-bottom: 2px solid #fff;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #2127c8;
+    }
+
+    &:hover span {
+      background-color: #2127c8;
+    }
   }
+`;
+
+export const BorderBottom = styled.span`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 90px;
+  background-color: #fff;
+  height: 2px;
 `;
