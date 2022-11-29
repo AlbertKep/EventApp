@@ -13,8 +13,19 @@ import {
   EventDescription,
   EventDate,
   ButtonContainer,
+  ModalContent,
+  PeopleList,
+  Person,
 } from "./EventDetails.styled";
 import { Button } from "../../components/button/Button.styled";
+
+//components
+import Modal from "../../components/modal/Modal";
+
+// images
+import personeOne from "../../assets/images/aiony-haust-unsplash.jpg";
+import personeTwo from "../../assets/images/ian-dooley-unsplash.jpg";
+import personeThree from "../../assets/images/michael-dam-unsplash.jpg";
 
 const buttonStyles = {
   color: "#3137e7",
@@ -25,6 +36,24 @@ const buttonStyles = {
 export default function EventDetails() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [joinedPeople, setJoinedPeople] = useState([
+    { img: personeOne, name: "Blert Kępski", id: "23" },
+    { img: personeTwo, name: "Ana Kępski", id: "33" },
+    { img: personeThree, name: "Kasia Kępski", id: "53" },
+    { img: personeTwo, name: "Ewa Kępski", id: "73" },
+    { img: personeOne, name: "Ela Kępski", id: "03" },
+    { img: personeTwo, name: "Ana Kępski", id: "323" },
+    { img: personeThree, name: "Kasia Kępski", id: "753" },
+    { img: personeTwo, name: "Ewa Kępski", id: "773" },
+    { img: personeOne, name: "Ela Kępski", id: "013" },
+    { img: personeTwo, name: "Ana Kępski", id: "33" },
+    { img: personeThree, name: "Kasia Kępski", id: "53" },
+    { img: personeTwo, name: "Ewa Kępski", id: "73" },
+    { img: personeOne, name: "Ela Kępski", id: "03" },
+  ]);
+
+  const handleClick = () => setShowModal(!showModal);
 
   useEffect(() => {
     (async () => {
@@ -68,9 +97,36 @@ export default function EventDetails() {
               type specimen book.
             </EventDescription>
             <ButtonContainer>
-              <span>45 people joined the event</span>
+              <span onClick={handleClick}>
+                {joinedPeople.length} people joined the event
+              </span>
               <Button buttonStyles={buttonStyles}>Join</Button>
             </ButtonContainer>
+            {showModal && (
+              <Modal>
+                <ModalContent>
+                  {joinedPeople.length !== 0 && (
+                    <PeopleList>
+                      {joinedPeople.map((person) => (
+                        <Person key={person.id}>
+                          <img src={person.img} alt="person" />
+                          <p>{person.name}</p>
+                        </Person>
+                      ))}
+                    </PeopleList>
+                  )}
+                  {joinedPeople.length === 0 && (
+                    <p>Nobody is attending the event yet</p>
+                  )}
+
+                  <ButtonContainer justifyContent="flex-end">
+                    <Button buttonStyles={buttonStyles} onClick={handleClick}>
+                      Close
+                    </Button>
+                  </ButtonContainer>
+                </ModalContent>
+              </Modal>
+            )}
           </EventInfo>
         </>
       )}

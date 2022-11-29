@@ -70,10 +70,13 @@ export const EventDate = styled.div`
 export const ButtonContainer = styled.div`
   margin-top: 1.5em;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: ${({ justifyContent }) =>
+    justifyContent ? justifyContent : "space-between"};
   padding: 0 0.5em 1em;
 
   span {
+    cursor: pointer;
     color: #707070;
     font-size: 1rem;
     border-bottom: 1px solid #707070;
@@ -83,5 +86,48 @@ export const ButtonContainer = styled.div`
       color: #fff;
       border-color: #fff;
     }
+  }
+`;
+
+// modal content
+export const ModalContent = styled.div`
+  padding: 1.5em 0.5em;
+  width: 100%;
+  color: #3137e7;
+
+  button {
+    margin: 1.5em 1em 0 0;
+  }
+
+  p {
+    height: 100px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const PeopleList = styled.ul`
+  max-height: 500px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+`;
+
+export const Person = styled.li`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* color: #3137e7; */
+  font-weight: 700;
+  margin-bottom: 1em;
+
+  img {
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    object-fit: cover;
   }
 `;
