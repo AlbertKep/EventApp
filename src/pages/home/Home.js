@@ -14,6 +14,7 @@ import {
 import arrow from "../../assets/svg/arrow.svg";
 
 //components
+import About from "./About";
 import Loading from "../../components/loading/Loading";
 
 import { motion } from "framer-motion";
@@ -84,6 +85,8 @@ function Home() {
         </HomeHeader>
       )}
       {events.length === 0 && <Loading />}
+
+      <About />
     </>
   );
 }
