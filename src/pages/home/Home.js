@@ -32,7 +32,7 @@ const pathVariants = {
     transition: {
       duration: 1,
       ease: "easeInOut",
-      yoyo: Infinity,
+      repeat: Infinity,
     },
   },
 };
@@ -56,37 +56,39 @@ function Home() {
   return (
     <>
       {events.length !== 0 && (
-        <HomeHeader>
-          <EventsContainer>
-            {filteredElements.map((event, index) => (
-              <Event key={event.id} grid={gridIndex[index]}>
-                <ImageContainer>
-                  <img src={event.image} alt="event" />
-                </ImageContainer>
-                <EventInfo>
-                  <span>{event.name}</span>
-                  <span>{event.date}</span>
-                </EventInfo>
-              </Event>
-            ))}
-          </EventsContainer>
+        <>
+          <HomeHeader>
+            <EventsContainer>
+              {filteredElements.map((event, index) => (
+                <Event key={event.id} grid={gridIndex[index]}>
+                  <ImageContainer>
+                    <img src={event.image} alt="event" />
+                  </ImageContainer>
+                  <EventInfo>
+                    <span>{event.name}</span>
+                    <span>{event.date}</span>
+                  </EventInfo>
+                </Event>
+              ))}
+            </EventsContainer>
 
-          <HeadingContainer>
-            <Heading>Create, Choose Your Dream Event</Heading>
-            <Arrow
-              as={motion.div}
-              variants={pathVariants}
-              initial="initialSVG"
-              animate="animateSVG"
-            >
-              <img src={arrow} alt="arrow svg" />
-            </Arrow>
-          </HeadingContainer>
-        </HomeHeader>
+            <HeadingContainer>
+              <Heading>Create, Choose Your Dream Event</Heading>
+              <Arrow
+                as={motion.div}
+                variants={pathVariants}
+                initial="initialSVG"
+                animate="animateSVG"
+              >
+                <img src={arrow} alt="arrow svg" />
+              </Arrow>
+            </HeadingContainer>
+          </HomeHeader>
+          <About />
+        </>
       )}
-      {events.length === 0 && <Loading />}
 
-      <About />
+      {events.length === 0 && <Loading />}
     </>
   );
 }
