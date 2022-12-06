@@ -16,6 +16,25 @@ import {
   addDoc,
 } from "firebase/firestore";
 
+// const user1 = {
+//   name: "test",
+//   age: 12,
+//   car: {
+//     id: 3
+//   }
+// }
+
+// const user2 = {
+//   name: "test",
+//   age: 12,
+//   car: null
+// }
+
+// const carId = user1.car.id
+// const carId2 = user2.car?.id
+
+// const carId3 = user2.car ? user2.car.id  : undefined
+
 //let user = auth.currentUser;
 
 const getCollectionFromServer = () => {
@@ -79,7 +98,8 @@ const signIn = async (email, password) => {
     const user = response.user;
     return user;
   } catch (error) {
-    console.log(error);
+    console.log("SignInError", error);
+    throw new Error(error?.message || "Unknown error occurred");
   }
 };
 

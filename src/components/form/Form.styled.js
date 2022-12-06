@@ -7,14 +7,23 @@ export const FormContainer = styled.section`
 `;
 
 export const ImageContainer = styled.div`
-  margin-top: 3.5em;
+  max-width: 100px;
+  margin: 3.5em auto;
+
+  @media screen and (min-width: 768px) {
+    max-width: 150px;
+  }
+
+  img {
+    width: 100%;
+  }
 `;
 export const Form = styled.form`
   margin-top: 2.5em;
 `;
 
 export const InputContainer = styled.div`
-  margin: 2em auto;
+  margin: 3em auto;
   position: relative;
   color: #fff;
   width: 80%;
@@ -27,7 +36,7 @@ export const InputContainer = styled.div`
   label {
     margin-right: 1.3em;
     position: absolute;
-    bottom: 25px;
+    top: 0;
     left: 0;
     font-weight: 700;
     transition: all 0.2s ease-in-out;
@@ -45,15 +54,9 @@ export const InputContainer = styled.div`
     border-bottom: 2px solid #fff;
     padding: 0.5em;
     font-size: 1.3rem;
-    padding-top: 2em;
 
     &:focus {
       border-color: #3137e7;
-      background-color: transparent;
-    }
-
-    &:active {
-      background-color: transparent;
     }
 
     &:required:focus + label,
@@ -61,7 +64,7 @@ export const InputContainer = styled.div`
       border-color: #3137e7;
       color: #3137e7;
       font-size: 1rem;
-      bottom: 55px;
+      top: -30px;
     }
   }
 `;
@@ -111,4 +114,15 @@ export const BorderBottom = styled.span`
   width: 90px;
   background-color: #fff;
   height: 2px;
+`;
+
+export const ErrorValidationInfo = styled.span`
+  display: block;
+  color: #ee4040;
+  margin: 0.5em 0;
+  font-size: 0.8rem;
+
+  @media screen and (min-width: 992px) {
+    font-size: 1rem;
+  }
 `;
