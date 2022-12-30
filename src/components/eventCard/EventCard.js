@@ -20,6 +20,7 @@ const buttonStyles = {
 };
 
 export default function Event({ event }) {
+  console.log(event);
   return (
     <EventCard>
       <EventImage>

@@ -57,7 +57,7 @@ function SignUp() {
             <img src={authPerson} alt="person" />
           </ImageContainer>
 
-          <Form onSubmit={handleSubmit}>
+          <Form noValidate onSubmit={handleSubmit}>
             <InputContainer>
               <input
                 type="text"

@@ -1,5 +1,6 @@
 // styles
 import { Button } from "../../components/button/Button.styled";
+import { v4 } from "uuid";
 import {
   Container,
   ColumnController,
@@ -20,11 +21,9 @@ import ApproveIcon from "../../components/svgComponents/ApproveIcon";
 
 import { useState, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-// import { storage } from "../../firebase/config";
-// import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 // services
-import { addNewEvent } from "../../firebase/api.service";
+import { addNewEvent, addImageToEvent } from "../../firebase/api.service";
 
 //context
 import { AuthContext } from "../../context/AuthContext";
@@ -104,14 +103,6 @@ const checkIfFormIsValid = (values) => {
         clone[fieldName].error = "The description should not be empty";
       }
     }
-
-    // validators for field image
-    if (fieldName === "image") {
-      if (fieldInfo.value.length === 0) {
-        isValid = false;
-        clone[fieldName].error = "The event should contains image";
-      }
-    }
   });
 
   return {
@@ -162,27 +153,27 @@ export default function AddEvent() {
       value: "",
       error: null,
     },
-    image: {
-      value: "",
-      error: null,
-    },
   });
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(undefined);
+
   const [showEndDateAndTime, setShowEndDateAndTime] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
-  // const imageListRef = ref(storage, "images/");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { isValid, event } = checkIfFormIsValid(newEvent);
-    if (!isValid) {
+
+    // If form is valid
+    if (!isValid || !image) {
       setNewEvent(event);
+      setImage(null);
       return;
     }
 
+    // Prepare data
     const formData = Object.entries(newEvent).reduce(
       (collector, [fieldName, fieldInfo]) => ({
         ...collector,
@@ -191,33 +182,36 @@ export default function AddEvent() {
       {}
     );
 
+    // Join data and info about the user
     const eventData = {
       ...userInfo,
       ...formData,
     };
 
-    // if (!image) return;
-    // const imageRef = ref(storage, `images/${image.name}`);
-    // uploadBytes(imageRef, image).then(() => alert("Image Uploaded"));
-    // console.log(eventData);
-    addNewEvent(eventData);
+    const photoId = v4();
+
+    eventData.photoId = photoId;
+
+    await addNewEvent(eventData);
+    await addImageToEvent(photoId, image);
+
     setShowSuccessModal(true);
   };
 
   const changeHandler = (e) => {
     const { value, name } = e.target;
     if (name === "image") {
-      // e.target.files[0].name,
-      console.log(e.target.files[0].name);
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      setImage(file);
+    } else {
+      setNewEvent((prev) => ({
+        ...prev,
+        [name]: {
+          error: null,
+          value,
+        },
+      }));
     }
-    setNewEvent((prev) => ({
-      ...prev,
-      [name]: {
-        error: null,
-        value,
-      },
-    }));
   };
 
   return (
@@ -353,8 +347,10 @@ export default function AddEvent() {
               />
               + Add image
             </label>
-            {newEvent.image.error && (
-              <ErrorValidationInfo>{newEvent.image.error}</ErrorValidationInfo>
+            {image === null && (
+              <ErrorValidationInfo>
+                The event should contains image
+              </ErrorValidationInfo>
             )}
           </AddEventInputContainer>
 

@@ -1,4 +1,4 @@
-import { auth, db } from "./config";
+import { auth, db, storage } from "./config";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -15,6 +15,9 @@ import {
   query,
   addDoc,
 } from "firebase/firestore";
+
+// Storage
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // const user1 = {
 //   name: "test",
@@ -113,7 +116,6 @@ const getDocsByCollectionId = async (collectionId, { limit = 10 }) => {
       result.push({ id: doc.id, ...doc.data() });
     });
     return result;
-    // setFilteredEvents(result);
   } catch (error) {
     console.log(error);
     return [];
@@ -132,11 +134,30 @@ const getSingleCollectionById = async (collectionId) => {
   }
 };
 
+// TO DO
+const getImageFromStorage = (imgRef) => {
+  try {
+  } catch (error) {
+    console.log("GetImageError", error);
+    throw new Error(error?.message || "Unknown error occurred");
+  }
+};
+
 const addNewEvent = async (event) => {
   try {
     await addDoc(collection(db, "events"), event);
   } catch (error) {
     console.log(error);
+  }
+};
+
+const addImageToEvent = async (id, image) => {
+  try {
+    const imageRef = ref(storage, `photos/${id}`);
+    await uploadBytes(imageRef, image);
+  } catch (error) {
+    console.log("AddImageToEvent", error);
+    throw new Error(error?.message || "Unknown error occurred");
   }
 };
 export {
@@ -145,5 +166,7 @@ export {
   signIn,
   getDocsByCollectionId,
   getSingleCollectionById,
+  getImageFromStorage,
   addNewEvent,
+  addImageToEvent,
 };
