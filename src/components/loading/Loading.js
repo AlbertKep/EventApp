@@ -20,8 +20,8 @@ const dotsVariants = {
     scale: 1,
     transition: {
       duration: 0.7,
-      ease: "easeInOut",
-      yoyo: Infinity,
+      repeat: "Infinity",
+      repeatType: "reverse",
     },
   },
 };

@@ -32,15 +32,16 @@ const pathVariants = {
     transition: {
       duration: 1,
       ease: "easeInOut",
-      repeat: Infinity,
+      repeat: "Infinity",
+      repeatType: "reverse",
     },
   },
 };
+const gridIndex = ["one", "two", "three", "four", "five", "six"];
 
 function Home() {
   const [events, setEvents] = useState([]);
   const { width } = useWindowSize();
-  const gridIndex = ["one", "two", "three", "four", "five", "six"];
 
   useEffect(() => {
     (async () => {
