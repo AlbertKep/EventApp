@@ -134,9 +134,32 @@ const getSingleCollectionById = async (collectionId) => {
   }
 };
 
-// TO DO
-const getImageFromStorage = (imgRef) => {
+const getJoinedPeopleCollection = async (collectionId) => {
   try {
+    const joinedPeople = [];
+    const joinedPeopleRef = collection(
+      db,
+      "events",
+      collectionId,
+      "joinedPeople"
+    );
+    const result = await getDocs(joinedPeopleRef);
+    result.forEach((person) => {
+      joinedPeople.push(person.data());
+    });
+    return joinedPeople;
+  } catch (error) {
+    console.log("GetJoinedPeopleCollection", error);
+    throw new Error(error?.message || "Unknown error occurred");
+  }
+};
+
+// TO DO
+const getImageFromStorage = async (id) => {
+  try {
+    const imageRef = ref(storage, `photos/${id}`);
+    const imageToEvent = await getDownloadURL(imageRef);
+    return imageToEvent;
   } catch (error) {
     console.log("GetImageError", error);
     throw new Error(error?.message || "Unknown error occurred");
@@ -166,6 +189,7 @@ export {
   signIn,
   getDocsByCollectionId,
   getSingleCollectionById,
+  getJoinedPeopleCollection,
   getImageFromStorage,
   addNewEvent,
   addImageToEvent,
